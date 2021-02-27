@@ -1,14 +1,17 @@
 .vs
-Debug/
-Release/
-!reactphysics3d/lib/Debug/
-!reactphysics3d/lib/Release/
-!packages/**/Debug/
-!packages/**/Release/
+!src/reactphysics3d/lib/Debug/
+!src/reactphysics3d/lib/Release/
+!src/packages/**/Debug/
+!src/packages/**/Release/
 *.sdf
 /src/___mod/*.7z
 /src/crashdumps
 
-!/game/
+*.tlog
+*.lastbuildstate
+*.log
+
+/src/cl_dll/build
+/src/dlls/build
 
 HLVR.Ink
