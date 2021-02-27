@@ -808,8 +808,6 @@ void StartFrame(void)
 		return;
 	}
 
-	UTIL_UpdateSDModels();
-
 	VRPhysicsHelper::Instance().StartFrame();
 
 	if (g_pGameRules)

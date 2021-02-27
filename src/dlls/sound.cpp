@@ -1431,26 +1431,6 @@ int SENTENCEG_Lookup(const char* sample, char* sentencenum, int sentencenumsize)
 #include <filesystem>
 
 
-bool IsFemaleScientistAudioAvailable(const std::string& soundfile)
-{
-	if (soundfile.length() == 0)
-		return false;
-
-	if (soundfile[0] == '*')
-		return IsFemaleScientistAudioAvailable(soundfile.substr(1));
-
-	if (soundfile.find("scientist/") != 0)
-		return false;
-
-	auto femalesoundfile = UTIL_GetGameDir() + "/sound/fsci/" + soundfile.substr(10);
-
-	auto absfemalesoundfile = std::filesystem::absolute(femalesoundfile);
-
-	return std::filesystem::exists(absfemalesoundfile);
-}
-
-
-// Intercept PRECACHE_SOUND to precache female NPC sounds when precaching NPC sounds - Max Vollmer, 2018-11-23
 // Engine keeps pointer to char*, so we need to make sure that it doesn't go invalid
 class SoundFilePathHolder
 {
@@ -1506,15 +1486,9 @@ SoundFilePathHolder soundFilePathHolder;
 int PRECACHE_SOUND(const char* s)
 {
 	std::string ssoundFilePath{ s };
-	if (IsFemaleScientistAudioAvailable(ssoundFilePath))
-	{
-		ssoundFilePath = "fsci/" + ssoundFilePath.substr(10);
-		PRECACHE_SOUND2(soundFilePathHolder.GetSoundFilePathPointer(ssoundFilePath));
-	}
 	return PRECACHE_SOUND2(s);
 }
 
-// Intercept EMIT_AMBIENT_SOUND to inject female NPC sounds when played as ambient sound (e.g. in the test lab) - Max Vollmer, 2018-11-23
 void EMIT_AMBIENT_SOUND(edict_t* entity, float* pos, const char* sample, float volume, float attenuation, int flags, int pitch)
 {
 	if (!sample)
@@ -1522,16 +1496,7 @@ void EMIT_AMBIENT_SOUND(edict_t* entity, float* pos, const char* sample, float v
 
 	if (*sample == '!')
 	{
-		// Intercept and use female audio files with 50% chance
 		std::string ssample{ sample };
-		if (CVAR_GET_FLOAT("vr_classic_mode") == 0.f && rand() % 2 == 1)
-		{
-			if (ssample.find("!SC_") == 0)
-			{
-				ssample =  "FS_" + ssample.substr(4);
-			}
-		}
-
 		char name[32];
 		if (SENTENCEG_Lookup(ssample.data(), name, 32) >= 0)
 		{
@@ -1545,19 +1510,6 @@ void EMIT_AMBIENT_SOUND(edict_t* entity, float* pos, const char* sample, float v
 	else
 	{
 		std::string ssample{ sample };
-		if (CVAR_GET_FLOAT("vr_classic_mode") == 0.f
-			&& rand() % 2 == 1
-			&& IsFemaleScientistAudioAvailable(ssample))
-		{
-			if (ssample.find("*") == 0)
-			{
-				ssample = "*fsci/" + ssample.substr(11);
-			}
-			else
-			{
-				ssample = "fsci/" + ssample.substr(10);
-			}
-		}
 
 		EMIT_AMBIENT_SOUND2(entity, pos, ssample.data(), volume, attenuation, flags, pitch);
 	}
@@ -1570,15 +1522,7 @@ void EMIT_SOUND_DYN(edict_t* entity, int channel, const char* sample, float volu
 
 	if (*sample == '!')
 	{
-		// Intercept and use female audio files for female NPCs
 		std::string ssample{ sample };
-		if (CBaseEntity::InstanceOrWorld(entity)->IsFemaleNPC())
-		{
-			if (ssample.find("!SC_") == 0)
-			{
-				ssample = "!FS_" + ssample.substr(4);
-			}
-		}
 
 		char name[32];
 		if (SENTENCEG_Lookup(ssample.data(), name, 32) >= 0)
@@ -1593,17 +1537,6 @@ void EMIT_SOUND_DYN(edict_t* entity, int channel, const char* sample, float volu
 	else
 	{
 		std::string ssample{ sample };
-		if (CBaseEntity::InstanceOrWorld(entity)->IsFemaleNPC() && IsFemaleScientistAudioAvailable(ssample))
-		{
-			if (ssample.find("*") == 0)
-			{
-				ssample = "*fsci/" + ssample.substr(11);
-			}
-			else
-			{
-				ssample = "fsci/" + ssample.substr(10);
-			}
-		}
 
 		EMIT_SOUND_DYN2(entity, channel, ssample.data(), volume, attenuation, flags, pitch);
 	}

@@ -586,8 +586,6 @@ int PRECACHE_MODEL2(const char* s);
 int PRECACHE_GENERIC2(const char* s);
 void SET_MODEL(edict_t* e, const char* m);
 int MODEL_INDEX(const char* m);
-extern bool gSDModelsEnabled;
-void UTIL_UpdateSDModels();
 #endif
 
 inline void EMIT_SOUND(edict_t* entity, int channel, const char* sample, float volume, float attenuation)

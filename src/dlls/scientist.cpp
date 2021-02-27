@@ -113,16 +113,10 @@ public:
 
 	CUSTOM_SCHEDULES;
 
-	// For easy detection of female NPCs to change audio files in sound.cpp - Max Vollmer, 2018-11-23
-	bool IsFemaleNPC() override { return m_fIsFemale; }
-
 private:
 	float m_painTime = 0.f;
 	float m_healTime = 0.f;
 	float m_fearTime = 0.f;
-
-protected:
-	BOOL m_fIsFemale{ FALSE };
 };
 
 LINK_ENTITY_TO_CLASS(monster_scientist, CScientist);
@@ -132,7 +126,7 @@ TYPEDESCRIPTION CScientist::m_SaveData[] =
 	DEFINE_FIELD(CScientist, m_painTime, FIELD_TIME),
 	DEFINE_FIELD(CScientist, m_healTime, FIELD_TIME),
 	DEFINE_FIELD(CScientist, m_fearTime, FIELD_TIME),
-	DEFINE_FIELD(CScientist, m_fIsFemale, FIELD_BOOLEAN) };
+};
 
 IMPLEMENT_SAVERESTORE(CScientist, CTalkMonster);
 
@@ -644,10 +638,9 @@ void CScientist::HandleAnimEvent(MonsterEvent_t* pEvent)
 //=========================================================
 void CScientist::Spawn(void)
 {
-	m_fIsFemale = CVAR_GET_FLOAT("vr_classic_mode") == 0.f && rand() % 2 == 1;
 	Precache();
 
-	SET_MODEL(ENT(pev), m_fIsFemale ? "models/femalesci.mdl" : "models/scientist.mdl");
+	SET_MODEL(ENT(pev), "models/scientist.mdl");
 	UTIL_SetSize(pev, VEC_HUMAN_NPC_HULL_MIN, VEC_HUMAN_NPC_HULL_MAX);
 
 	pev->scale = CVAR_GET_FLOAT("vr_npcscale");
@@ -663,8 +656,6 @@ void CScientist::Spawn(void)
 	pev->view_ofs = Vector(0, 0, 50 * pev->scale);  // position of the eyes relative to monster's origin.
 	m_flFieldOfView = VIEW_FIELD_WIDE;                // NOTE: we need a wide field of view so scientists will notice player and say hello
 	m_MonsterState = MONSTERSTATE_NONE;
-
-	//	m_flDistTooFar		= 256.0;
 
 	m_afCapability = bits_CAP_HEAR | bits_CAP_TURN_HEAD | bits_CAP_OPEN_DOORS | bits_CAP_AUTO_DOORS | bits_CAP_USE;
 
@@ -689,7 +680,7 @@ void CScientist::Spawn(void)
 //=========================================================
 void CScientist::Precache(void)
 {
-	PRECACHE_MODEL(m_fIsFemale ? "models/femalesci.mdl" : "models/scientist.mdl");
+	PRECACHE_MODEL("models/scientist.mdl");
 	PRECACHE_SOUND("scientist/sci_pain1.wav");
 	PRECACHE_SOUND("scientist/sci_pain2.wav");
 	PRECACHE_SOUND("scientist/sci_pain3.wav");
@@ -1102,12 +1093,6 @@ public:
 	void KeyValue(KeyValueData* pkvd);
 	int m_iPose = 0;  // which sequence to display
 	static char* m_szPoses[7];
-
-	// For easy detection of female NPCs to change audio files in sound.cpp - Max Vollmer, 2018-11-23
-	bool IsFemaleNPC() override { return m_fIsFemale; }
-
-private:
-	BOOL m_fIsFemale{ FALSE };
 };
 char* CDeadScientist::m_szPoses[] = { "lying_on_back", "lying_on_stomach", "dead_sitting", "dead_hang", "dead_table1", "dead_table2", "dead_table3" };
 
@@ -1128,9 +1113,8 @@ LINK_ENTITY_TO_CLASS(monster_scientist_dead, CDeadScientist);
 //
 void CDeadScientist::Spawn()
 {
-	m_fIsFemale = CVAR_GET_FLOAT("vr_classic_mode") == 0.f && rand() % 2 == 1;
-	PRECACHE_MODEL(m_fIsFemale ? "models/femalesci.mdl" : "models/scientist.mdl");
-	SET_MODEL(ENT(pev), m_fIsFemale ? "models/femalesci.mdl" : "models/scientist.mdl");
+	PRECACHE_MODEL("models/scientist.mdl");
+	SET_MODEL(ENT(pev), "models/scientist.mdl");
 
 	pev->effects = 0;
 	pev->sequence = 0;
@@ -1150,16 +1134,6 @@ void CDeadScientist::Spawn()
 		pev->skin = 0;
 
 	pev->sequence = LookupSequence(m_szPoses[m_iPose]);
-
-	// TODO: FIXME: HACKHACK: The female scientist model currently doesn't have all animations,
-	// check if the animation exists in the male version and if so, make the scientist male.
-	if (pev->sequence == -1 && m_fIsFemale)
-	{
-		m_fIsFemale = false;
-		PRECACHE_MODEL("models/scientist.mdl");
-		SET_MODEL(ENT(pev), "models/scientist.mdl");
-		pev->sequence = LookupSequence(m_szPoses[m_iPose]);
-	}
 
 	if (pev->sequence == -1)
 	{
@@ -1222,9 +1196,8 @@ typedef enum
 //
 void CSittingScientist::Spawn()
 {
-	m_fIsFemale = CVAR_GET_FLOAT("vr_classic_mode") == 0.f && rand() % 2 == 1;
-	PRECACHE_MODEL(m_fIsFemale ? "models/femalesci.mdl" : "models/scientist.mdl");
-	SET_MODEL(ENT(pev), m_fIsFemale ? "models/femalesci.mdl" : "models/scientist.mdl");
+	PRECACHE_MODEL("models/scientist.mdl");
+	SET_MODEL(ENT(pev), "models/scientist.mdl");
 	Precache();
 	InitBoneControllers();
 

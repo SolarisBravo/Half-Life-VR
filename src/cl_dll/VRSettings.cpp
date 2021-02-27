@@ -100,7 +100,6 @@ void VRSettings::Init()
 	RegisterCVAR("vr_squeak_scale", "1");
 	RegisterCVAR("vr_teleport_attachment", "0");
 	RegisterCVAR("vr_tripmine_scale", "1");
-	RegisterCVAR("vr_use_hd_models", "0");
 	RegisterCVAR("vr_use_animated_weapons", "0");
 	RegisterCVAR("vr_view_dist_to_walls", VR_DEFAULT_VIEW_DIST_TO_WALLS_AS_STRING);
 	RegisterCVAR("vr_weapon_grenade_mode", "0");
@@ -108,7 +107,7 @@ void VRSettings::Init()
 	RegisterCVAR("vr_world_scale", "1");
 	RegisterCVAR("vr_world_z_strech", "1");
 	RegisterCVAR("vr_xenjumpthingies_teleporteronly", "0");
-	RegisterCVAR("vr_headset_fps", "80"); //
+	RegisterCVAR("vr_headset_fps", "80");
 	RegisterCVAR("vr_autocrouch_enabled", "1");
 	RegisterCVAR("vr_tankcontrols", "2");
 	RegisterCVAR("vr_tankcontrols_max_distance", "128");
@@ -116,9 +115,8 @@ void VRSettings::Init()
 	RegisterCVAR("vr_make_levers_nonsolid", "1");
 	RegisterCVAR("vr_make_mountedguns_nonsolid", "1");
 	RegisterCVAR("vr_tankcontrols_instant_turn", "0");
-	RegisterCVAR("vr_smooth_steps", "0");
+	RegisterCVAR("vr_smooth_steps", "0"); //Test this
 	RegisterCVAR("vr_headset_offset", "0");
-	RegisterCVAR("vr_classic_mode", "1");
 	RegisterCVAR("vr_enable_interactive_debris", "1");
 	RegisterCVAR("vr_max_interactive_debris", "50");
 	RegisterCVAR("vr_drag_onlyhand", "1");
@@ -142,7 +140,7 @@ void VRSettings::Init()
 	RegisterCVAR("vr_walkspeedfactor", "0.3");	// cl_movespeedkey
 	RegisterCVAR("vr_togglewalk", "0");
 
-	RegisterCVAR("vr_texturemode", "GL_NEAREST");
+	RegisterCVAR("vr_texturemode", "GL_LINEAR_MIPMAP_LINEAR"); //GL_LINEAR_MIPMAP_LINEAR closely resembles HL1's OpenGL renderer. GL_NEAREST closely resembles HL1's Software renderer.
 	RegisterCVAR("vr_display_game", "1");
 
 	// Initialize time that settings file was last changed
@@ -239,18 +237,7 @@ void VRSettings::CheckCVARsForChanges()
 	SyncCvars("vr_yawspeed", "cl_yawspeed");
 	SyncCvars("vr_walkspeedfactor", "cl_movespeedkey");
 
-	// reset HD cvars if classic mode is enabled
-	if (gEngfuncs.pfnGetCvarFloat("vr_classic_mode") != 0.f)
-	{
-		gEngfuncs.Cvar_SetValue("vr_hd_textures_enabled", 0.f);
-		gEngfuncs.Cvar_SetValue("vr_use_hd_models", 0.f);
-		gEngfuncs.pfnClientCmd("gl_texturemode GL_NEAREST");
-		gEngfuncs.pfnClientCmd("vr_texturemode GL_NEAREST");
-	}
-	else
-	{
-		UpdateTextureMode();
-	}
+	UpdateTextureMode();
 
 	// only check every 100~200ms
 	auto now = std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now()).time_since_epoch().count();

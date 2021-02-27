@@ -887,9 +887,6 @@ void GameDLLInit(void)
 	// END REGISTER CVARS FOR SKILL LEVEL STUFF
 
 
-	gSDModelsEnabled = CVAR_GET_FLOAT("vr_use_hd_models") == 0.f;
-
-
 	SERVER_COMMAND("exec skill.cfg\n");
 
 
