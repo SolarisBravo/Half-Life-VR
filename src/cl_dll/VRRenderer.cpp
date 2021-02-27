@@ -1,4 +1,3 @@
-
 #include <chrono>
 #include <unordered_set>
 
@@ -58,13 +57,15 @@ VRRenderer gVRRenderer;
 
 namespace
 {
-	std::unordered_set<std::string> g_handmodels{
+	std::unordered_set<std::string> g_handmodels
+	{
 		{
 			"models/v_hand_labcoat.mdl",
 			"models/v_hand_hevsuit.mdl",
-			"models/SD/v_hand_labcoat.mdl",
-			"models/SD/v_hand_hevsuit.mdl",
-		} };
+			"models/v_hand_labcoat.mdl", //No idea what's going on here - the game crashes on startup if there are less than four models in this set.
+			"models/v_hand_hevsuit.mdl",
+		}
+	};
 }
 
 

@@ -49,22 +49,6 @@ namespace
 		{"models/v_shotgun.mdl", "models/animov/v_shotgun.mdl"},
 		{"models/v_squeak.mdl", "models/animov/v_squeak.mdl"},
 		{"models/v_tripmine.mdl", "models/animov/v_tripmine.mdl"},
-
-		{"models/SD/v_357.mdl", "models/SD/animov/v_357.mdl"},
-		{"models/SD/v_9mmar.mdl", "models/SD/animov/v_9mmar.mdl"},
-		{"models/SD/v_9mmhandgun.mdl", "models/SD/animov/v_9mmhandgun.mdl"},
-		{"models/SD/v_crossbow.mdl", "models/SD/animov/v_crossbow.mdl"},
-		{"models/SD/v_crowbar.mdl", "models/SD/animov/v_crowbar.mdl"},
-		{"models/SD/v_egon.mdl", "models/SD/animov/v_egon.mdl"},
-		{"models/SD/v_gauss.mdl", "models/SD/animov/v_gauss.mdl"},
-		{"models/SD/v_grenade.mdl", "models/SD/animov/v_grenade.mdl"},
-		{"models/SD/v_hgun.mdl", "models/SD/animov/v_hgun.mdl"},
-		{"models/SD/v_rpg.mdl", "models/SD/animov/v_rpg.mdl"},
-		{"models/SD/v_satchel.mdl", "models/SD/animov/v_satchel.mdl"},
-		{"models/SD/v_satchel_radio.mdl", "models/SD/animov/v_satchel_radio.mdl"},
-		{"models/SD/v_shotgun.mdl", "models/SD/animov/v_shotgun.mdl"},
-		{"models/SD/v_squeak.mdl", "models/SD/animov/v_squeak.mdl"},
-		{"models/SD/v_tripmine.mdl", "models/SD/animov/v_tripmine.mdl"},
 	};
 
 	string_t GetAnimatedWeaponModelName(string_t modelName)
