@@ -9,4 +9,4 @@ Release/
 /src/___mod/*.7z
 /src/crashdumps
 
-/game/
+!/game/
