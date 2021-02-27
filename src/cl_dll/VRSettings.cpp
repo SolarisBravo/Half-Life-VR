@@ -127,7 +127,7 @@ void VRSettings::Init()
 	RegisterCVAR("vr_breakable_gib_percentage", "100");
 	RegisterCVAR("vr_breakable_max_gibs", "50");
 
-	RegisterCVAR("vr_use_fmod", "1");
+	RegisterCVAR("vr_use_fmod", "0");
 	RegisterCVAR("vr_fmod_3d_occlusion", "1");
 	RegisterCVAR("vr_fmod_wall_occlusion", "40");
 	RegisterCVAR("vr_fmod_door_occlusion", "30");
