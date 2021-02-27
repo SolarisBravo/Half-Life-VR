@@ -36,8 +36,8 @@ void VRSettings::Init()
 	RegisterCVAR("vr_crossbow_scale", "1");
 	RegisterCVAR("vr_crowbar_scale", "1");
 	RegisterCVAR("vr_crowbar_vanilla_attack_enabled", "0");
-	RegisterCVAR("vr_disable_func_friction", "1");
-	RegisterCVAR("vr_disable_triggerpush", "1");
+	RegisterCVAR("vr_disable_func_friction", "0");
+	RegisterCVAR("vr_disable_triggerpush", "0");
 	RegisterCVAR("vr_egon_scale", "1");
 	RegisterCVAR("vr_enable_aim_laser", "0");
 	RegisterCVAR("vr_speech_commands_enabled", "0");
@@ -61,7 +61,7 @@ void VRSettings::Init()
 	RegisterCVAR("vr_hud_health", "1");
 	RegisterCVAR("vr_hud_health_offset_x", "-4");
 	RegisterCVAR("vr_hud_health_offset_y", "-3");
-	RegisterCVAR("vr_hud_mode", "2");
+	RegisterCVAR("vr_hud_mode", "2"); //0 = attach to controllers, 1 = attach to view, 2 = disable
 	RegisterCVAR("vr_hud_size", "1");
 	RegisterCVAR("vr_hud_textscale", "1");
 	RegisterCVAR("vr_ladder_immersive_movement_enabled", "1");
@@ -84,9 +84,9 @@ void VRSettings::Init()
 	RegisterCVAR("vr_move_analogturn_inverted", "0");
 	RegisterCVAR("vr_move_analogupdown_inverted", "0");
 	RegisterCVAR("vr_move_analog_deadzone", "0.1");
-	RegisterCVAR("vr_move_instant_accelerate", "1");
-	RegisterCVAR("vr_move_instant_decelerate", "1");
-	RegisterCVAR("vr_no_gauss_recoil", "1");
+	RegisterCVAR("vr_move_instant_accelerate", "0");
+	RegisterCVAR("vr_move_instant_decelerate", "0");
+	RegisterCVAR("vr_no_gauss_recoil", "0");
 	RegisterCVAR("vr_npcscale", "1");
 	RegisterCVAR("vr_playerturn_enabled", "1");
 	RegisterCVAR("vr_rl_duck_height", "36");
@@ -95,7 +95,7 @@ void VRSettings::Init()
 	RegisterCVAR("vr_rpg_scale", "1");
 	RegisterCVAR("vr_satchel_radio_scale", "1");
 	RegisterCVAR("vr_satchel_scale", "1");
-	RegisterCVAR("vr_semicheat_spinthingyspeed", "50");
+	RegisterCVAR("vr_semicheat_spinthingyspeed", "110");
 	RegisterCVAR("vr_shotgun_scale", "1");
 	RegisterCVAR("vr_squeak_scale", "1");
 	RegisterCVAR("vr_teleport_attachment", "0");
@@ -108,7 +108,7 @@ void VRSettings::Init()
 	RegisterCVAR("vr_world_scale", "1");
 	RegisterCVAR("vr_world_z_strech", "1");
 	RegisterCVAR("vr_xenjumpthingies_teleporteronly", "0");
-	RegisterCVAR("vr_headset_fps", "90");
+	RegisterCVAR("vr_headset_fps", "80"); //
 	RegisterCVAR("vr_autocrouch_enabled", "1");
 	RegisterCVAR("vr_tankcontrols", "2");
 	RegisterCVAR("vr_tankcontrols_max_distance", "128");
@@ -118,10 +118,10 @@ void VRSettings::Init()
 	RegisterCVAR("vr_tankcontrols_instant_turn", "0");
 	RegisterCVAR("vr_smooth_steps", "0");
 	RegisterCVAR("vr_headset_offset", "0");
-	RegisterCVAR("vr_classic_mode", "0");
+	RegisterCVAR("vr_classic_mode", "1");
 	RegisterCVAR("vr_enable_interactive_debris", "1");
 	RegisterCVAR("vr_max_interactive_debris", "50");
-	RegisterCVAR("vr_drag_onlyhand", "0");
+	RegisterCVAR("vr_drag_onlyhand", "1");
 	RegisterCVAR("vr_npc_gunpoint", "1");
 	RegisterCVAR("vr_eye_mode", "0");
 	RegisterCVAR("vr_breakable_gib_percentage", "100");
@@ -142,8 +142,8 @@ void VRSettings::Init()
 	RegisterCVAR("vr_walkspeedfactor", "0.3");	// cl_movespeedkey
 	RegisterCVAR("vr_togglewalk", "0");
 
-	RegisterCVAR("vr_texturemode", "GL_LINEAR_MIPMAP_LINEAR");
-	RegisterCVAR("vr_display_game", "0");
+	RegisterCVAR("vr_texturemode", "GL_NEAREST");
+	RegisterCVAR("vr_display_game", "1");
 
 	// Initialize time that settings file was last changed
 	std::filesystem::path settingsPath = GetPathFor("/hlvr.cfg");

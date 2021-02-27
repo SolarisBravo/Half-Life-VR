@@ -51,13 +51,13 @@
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>..\..\game\vr\cl_dll\</OutDir>
+    <OutDir>..\..\game\vr\cl_dlls\</OutDir>
     <IntDir>.\build\release\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <TargetName>client</TargetName>
     <CodeAnalysisRuleSet>NativeMinimumRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
+    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -157,13 +157,13 @@ copy .\Debug\client.pdb "$(HalfLifeInstallDirectory)vr/cl_dlls/client.pdb"
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <LinkDLL>true</LinkDLL>
       <SubSystem>Windows</SubSystem>
-      <OutputFile>..\..\game\vr\cl_dll\client.dll</OutputFile>
+      <OutputFile>..\..\game\vr\cl_dlls\client.dll</OutputFile>
       <ImportLibrary>.\Release\client.lib</ImportLibrary>
       <AdditionalDependencies>winmm.lib;../utils/vgui/lib/win32_vc6/vgui.lib;wsock32.lib;openvr/openvr_api.lib;opengl32.lib;fmod/lib/x86/fmod_vc.lib;EasyHook/lib/EasyHook32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>ClientDLLIncludeFixer.exe .\build\release\</Command>
+      <Command>ClientDLLIncludeFixer.exe ..\..\game\vr\cl_dlls\client.dll</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
